@@ -23,12 +23,12 @@ Route::get('/count', function () {
 });
 
 Route::get('/history', function () {
-    $counts = Cigarette::whereBetween('created_at', [now()->subDays(6)->startOfDay(), now()->endOfDay()])
+    $counts = \App\Cigarette::whereBetween('created_at', [now()->subDays(6)->startOfDay(), now()->endOfDay()])
         ->orderBy('created_at')
         ->get();
 
     $counts = $counts->groupBy(function ($item, $key) {
-        return $item->updated_at->format('m/d/Y');
+        return $item->created_at->format('m/d/Y');
     });
 
     $x = 0;
